@@ -68,6 +68,7 @@
             <p class="lead">Temukan pelatihan yang sesuai dengan kebutuhan Anda dan jadwalkan sekarang!</p>
         </div>
     </section>
+
     <!-- Calendar Section -->
     <section class="calendar-section">
         <div class="container">
@@ -81,14 +82,12 @@
                 <button class="btn btn-primary" onclick="checkBatch()">Cek Batch</button>
             </div>
             <div class="mt-4" id="batchResult" style="display:none;">
-                <h4>Batch Tersedia</h4>
-                <ul class="list-group">
-                    <li class="list-group-item">Batch 1: Pelatihan Dasar - 09:00 - 12:00</li>
-                    <li class="list-group-item">Batch 2: Pelatihan Lanjutan - 13:00 - 16:00</li>
-                </ul>
+                <h4>Batch Tersedia untuk Tanggal <span id="selectedDate"></span></h4>
+                <ul class="list-group" id="batchList"></ul>
             </div>
         </div>
     </section>
+
     <!-- Training List Section -->
     <section class="training-list">
         <div class="container">
@@ -99,9 +98,9 @@
                         <div class="card-body">
                             <h5 class="card-title">Pelatihan Dasar</h5>
                             <p class="card-text">Belajar dasar-dasar teknologi informasi.</p>
-                            <p><strong>Jadwal:</strong> Setiap Senin & Rabu</p>
+                            <p><strong>Jadwal:</strong> Setiap Senin & Rabu (Tanggal: 2024-01-10, 2024-01-17)</p>
                             <p><strong>Sisa Kuota:</strong> <span class="quota">15</span></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Dasar', 15, 'Senin & Rabu', 'Ruang 101')">Lihat Detail</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Dasar', 15, 'Senin & Rabu (Tanggal: 2024-01-10, 2024-01-17)', 'Ruang 101')">Lihat Detail</button>
                         </div>
                     </div>
                 </div>
@@ -110,9 +109,9 @@
                         <div class="card-body">
                             <h5 class="card-title">Pelatihan Lanjutan</h5>
                             <p class="card-text">Tingkatkan kemampuan Anda di bidang teknologi.</p>
-                            <p><strong>Jadwal:</strong> Setiap Selasa & Kamis</p>
+                            <p><strong>Jadwal:</strong> Setiap Selasa & Kamis (Tanggal: 2024-01-11, 2024-01-18)</p>
                             <p><strong>Sisa Kuota:</strong> <span class="quota">10</span></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Lanjutan', 10, 'Selasa & Kamis', 'Ruang 202')">Lihat Detail</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Lanjutan', 10, 'Selasa & Kamis (Tanggal: 2024-01-11, 2024-01-18)', 'Ruang 202')">Lihat Detail</button>
                         </div>
                     </div>
                 </div>
@@ -121,9 +120,9 @@
                         <div class="card-body">
                             <h5 class="card-title">Pelatihan Profesional</h5>
                             <p class="card-text">Kuasai teknologi untuk profesional.</p>
-                            <p><strong>Jadwal:</strong> Setiap Jumat</p>
+                            <p><strong>Jadwal:</strong> Setiap Jumat (Tanggal: 2024-01-12, 2024-01-19)</p>
                             <p><strong>Sisa Kuota:</strong> <span class="quota">5</span></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Profesional', 5, 'Jumat', 'Ruang 303')">Lihat Detail</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="showDetail('Pelatihan Profesional', 5, 'Jumat (Tanggal: 2024-01-12, 2024-01-19)', 'Ruang 303')">Lihat Detail</button>
                         </div>
                     </div>
                 </div>
@@ -224,7 +223,34 @@
         }
 
         function checkBatch() {
+            const selectedDate = document.getElementById('checkDate').value;
             const batchResult = document.getElementById('batchResult');
+            const batchList = document.getElementById('batchList');
+            const selectedDateDisplay = document.getElementById('selectedDate');
+
+            batchList.innerHTML = ''; // Clear previous results
+
+            if (!selectedDate) {
+                alert('Harap pilih tanggal terlebih dahulu!');
+                return;
+            }
+
+            // Simulated data for batch availability
+            const batches = [
+                { batch: 'Batch 1', details: 'Pelatihan Dasar', quota: 10 },
+                { batch: 'Batch 2', details: 'Pelatihan Lanjutan', quota: 5 },
+            ];
+
+            selectedDateDisplay.textContent = selectedDate;
+
+            // Display batches dynamically
+            batches.forEach(batch => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.textContent = `${batch.batch}: ${batch.details} (Sisa Kuota: ${batch.quota})`;
+                batchList.appendChild(listItem);
+            });
+
             batchResult.style.display = 'block';
         }
     </script>
